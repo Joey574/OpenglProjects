@@ -21,6 +21,9 @@
     <ClCompile Include="world_generation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="game.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="world_generation.h">
@@ -32,7 +35,7 @@
     <ClInclude Include="world_data.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="player_data.h">
+    <ClInclude Include="game.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

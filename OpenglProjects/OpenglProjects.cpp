@@ -2,7 +2,7 @@
 
 static const float PI = 3.1415926f;
 
-GLFWwindow* create_window(size_t width, size_t height) {
+GLFWwindow* create_window(size_t width, size_t height, const std::string& name) {
     GLFWwindow* window;
 
     /* Initialize the library */
@@ -11,7 +11,7 @@ GLFWwindow* create_window(size_t width, size_t height) {
     }
 
     /* Create a windowed mode window and its OpenGL context */
-    window = glfwCreateWindow(width, height, "N-body simulation", NULL, NULL);
+    window = glfwCreateWindow(width, height, name.c_str(), NULL, NULL);
     if (!window)
     {
         glfwTerminate();

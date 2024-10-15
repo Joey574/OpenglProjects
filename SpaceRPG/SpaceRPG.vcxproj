@@ -136,12 +136,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="game.cpp" />
     <ClCompile Include="SpaceRPG.cpp" />
     <ClCompile Include="world_generation.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="game.h" />
     <ClInclude Include="pch.h" />
-    <ClInclude Include="player_data.h" />
     <ClInclude Include="world_data.h" />
     <ClInclude Include="world_generation.h" />
   </ItemGroup>
