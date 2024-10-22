@@ -85,3 +85,10 @@ void draw_square(float x, float y, float r) {
 
     glEnd();
 }
+void set_pixel(GLfloat x, GLfloat y) {
+    glBegin(GL_POINTS);
+
+    glVertex2f(x, y);
+
+    glEnd();
+}

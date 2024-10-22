@@ -11,3 +11,4 @@ void set_key_callback(GLFWwindow* window, GLFWkeyfun key_callback);
 
 void draw_circle(float x, float y, float r);
 void draw_square(float x, float y, float r);
+void set_pixel(GLfloat x, GLfloat y);
