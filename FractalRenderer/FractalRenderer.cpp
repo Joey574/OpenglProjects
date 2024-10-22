@@ -9,6 +9,8 @@ double zoom = 1.0f;
 double x_offset = 0.0f;
 double y_offset = 0.0f;
 
+size_t mandle_iter = 1000;
+
 void render_mandlebrot(size_t width, size_t height);
 double in_mandlebrot(double x, double y, size_t max_it);
 
@@ -17,10 +19,28 @@ void scroll_callback(GLFWwindow* window, double xoffset, double yoffset) {
 	const double zoomSpeed = 0.1;
 
 	if (yoffset > 0) {
-		zoom += zoomSpeed * zoom;
+		double change = zoomSpeed * zoom;
+		mandle_iter += (zoom / change) * 10.0;
+
+		x_offset += (change * x_offset) / zoom;
+		y_offset += (change * y_offset) / zoom;
+
+		zoom += change;
 	}
 	else if (yoffset < 0) {
-		zoom -= zoomSpeed * zoom;
+		double change = zoomSpeed * zoom;
+
+		size_t t = (zoom / change) * 10.0;
+		if ((int)mandle_iter - (int)t < 1) {
+			mandle_iter = 1;
+		} else {
+			mandle_iter -= t;
+		}
+
+		x_offset -= (change * x_offset) / zoom;
+		y_offset -= (change * y_offset) / zoom;
+
+		zoom -= change;
 	}
 
 	zoom = std::max(zoom, 0.01);
@@ -29,24 +49,24 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 
 	const double offset_speed = 0.05;
 
-	if (key == GLFW_KEY_W && action == GLFW_PRESS) {
+	if (key == GLFW_KEY_W) {
 		y_offset += offset_speed;
 	}
-	if (key == GLFW_KEY_A && action == GLFW_PRESS) {
+	if (key == GLFW_KEY_A) {
 		x_offset -= offset_speed;
 	}
-	if (key == GLFW_KEY_S && action == GLFW_PRESS) {
+	if (key == GLFW_KEY_S) {
 		y_offset -= offset_speed;
 	}
-	if (key == GLFW_KEY_D && action == GLFW_PRESS) {
+	if (key == GLFW_KEY_D) {
 		x_offset += offset_speed;
 	}
 }
 
 int main()
 {
-	size_t width = 600;
-	size_t height = 600;
+	size_t width = 1920;
+	size_t height = 1200;
 
 
 	GLFWwindow* window = create_window(width, height, "Fractal Renderer");
@@ -74,7 +94,7 @@ int main()
 		glfwPollEvents();
 
 		out.append("\u001b[HFrame: ").append(std::to_string(count)).append("\n\nSim Update:\nAverage: ").append(std::to_string(sim_sum / count)).append(" (ms)   \nLast: ").
-			append(std::to_string(sim_time.count() / 1000000.00)).append(" (ms)   \n");
+			append(std::to_string(sim_time.count() / 1000000.00)).append(" (ms)   \n\nMandle Iterations: ").append(std::to_string(mandle_iter)).append("\n");
 
 		std::cout << out;
 	}
@@ -95,8 +115,6 @@ void render_mandlebrot(size_t width, size_t height) {
 	double scaleX = (std::abs(xMin - xMax)) / (width - 1);
 	double scaleY = (std::abs(yMin - yMax)) / (height - 1);
 
-	float radius = 2.0 / (double)width;
-
 	#pragma omp parallel for
 	for (size_t y = 0; y < height; y++) {
 		for (size_t x = 0; x < width; x++) {
@@ -104,7 +122,7 @@ void render_mandlebrot(size_t width, size_t height) {
 			double fx = xMin + ((double)x * scaleX);
 			double fy = yMin + ((double)y * scaleY);
 			
-			pixel[y * width + x] = in_mandlebrot(fx, fy, 5000);
+			pixel[y * width + x] = in_mandlebrot(fx, fy, mandle_iter);
 		}
 	}
 
