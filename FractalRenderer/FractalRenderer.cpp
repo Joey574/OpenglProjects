@@ -121,7 +121,7 @@ void render_mandlebrot(size_t width, size_t height) {
 
 			double fx = xMin + ((double)x * scaleX);
 			double fy = yMin + ((double)y * scaleY);
-			
+
 			pixel[y * width + x] = in_mandlebrot(fx, fy, mandle_iter);
 		}
 	}
@@ -150,11 +150,11 @@ double in_mandlebrot(double x, double y, size_t max_it) {
     std::complex<double> c(x, y);
     std::complex<double> z = 0;
 
-    for (size_t i = 0; i < max_it; ++i) {
+    for (size_t i = 0; i < max_it; i++) {
         z = z * z + c;
         if (std::abs(z) > 2) {
-            return 1.00 - (1.00 / (((double)i / 50.00) + 1.00)); // Point is outside + smooth
+            return 1.00 - (1.00 / (((double)i / 50.00) + 1.00));
         }
     }
-    return 1.00; // Point is inside the Mandelbrot set
+	return 1.00;
 }
