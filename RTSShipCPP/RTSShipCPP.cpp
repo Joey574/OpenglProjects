@@ -53,7 +53,9 @@ int main()
 	size_t width = 500;
 	size_t height = 500;
 
-	const size_t s_count = 100;
+	const size_t s_count = 1000;
+
+	weapon a = weapon(0.2f);
 
 	Ship* player_ships = (Ship*)malloc(s_count * sizeof(Ship));
 	Ship* enemy_ships = (Ship*)malloc(s_count * sizeof(Ship));
@@ -63,10 +65,12 @@ int main()
 	}
 
 	for (int i = 0; i < s_count; i++) {
+		player_ships[i] = Ship(&a, 1);
 		player_ships[i].m_acc = 0.25f;
 	}
 
 	for (int i = 0; i < s_count; i++) {
+		enemy_ships[i] = Ship(&a, 1);
 		enemy_ships[i].m_acc = 0.25f;
 	}
 
@@ -102,7 +106,6 @@ int main()
 		auto frame_time = std::chrono::high_resolution_clock::now() - frame_start;
 		frame_sum += frame_time.count() / 1000000.00;
 		deltaTime = frame_time.count() / 1000000000.00;
-
 
 		out.append("\u001b[HFrame: ").append(std::to_string(count)).append("\n\Game Update:\nAverage: ").append(std::to_string(frame_sum / count)).append(" (ms)   \nLast: ").
 			append(std::to_string(frame_time.count() / 1000000.00)).append(" (ms)   \n\nAverage: ").append(std::to_string(1000.00 / (frame_sum / count))).append(" fps   \n");

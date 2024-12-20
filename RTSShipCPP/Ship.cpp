@@ -24,6 +24,9 @@ void Ship::update_position(float deltaTime) {
 	m_pos += m_vel * deltaTime;
 	m_vel += delta * deltaTime * 0.5f;
 }
+void Ship::fire_actions(float deltaTime) {
+
+}
 
 float Ship::tts(float deltaTime) const {
 	return vec2::magnitude(m_vel) / (m_acc * deltaTime);
