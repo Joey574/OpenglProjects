@@ -146,7 +146,7 @@
   <ItemGroup>
     <ClInclude Include="Ship.h" />
     <ClInclude Include="vec2.h" />
-    <ClInclude Include="Weapon.h" />
+    <ClInclude Include="weapon.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

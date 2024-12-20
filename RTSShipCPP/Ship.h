@@ -2,7 +2,7 @@
 #include <immintrin.h>
 
 #include "vec2.h"
-#include "Weapon.h"
+#include "weapon.h"
 
 class Ship {
 public:

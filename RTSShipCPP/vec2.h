@@ -1,7 +1,6 @@
 #pragma once
 #include <iostream>
 
-
 struct vec2 {
 	float x;
 	float y;
@@ -24,18 +23,18 @@ struct vec2 {
 		return { vec.x / mag, vec.y / mag };
 	}
 
-
-	inline vec2 operator - (const vec2& a) const {
-		return { x - a.x, y - a.y };
-	}
 	inline vec2 operator + (const vec2& a) const {
 		return { x + a.x, y + a.y };
 	}
-
+	inline vec2 operator - (const vec2& a) const {
+		return { x - a.x, y - a.y };
+	}
+	
 	inline vec2 operator += (const vec2& a) {
 		x += a.x; y += a.y;
 		return *this;
 	}
+
 
 	inline vec2 operator * (float scalar) const {
 		return { x * scalar, y * scalar };
