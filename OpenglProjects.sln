@@ -13,6 +13,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FractalRenderer_CUDA", "Fra
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RTSShipCPP", "RTSShipCPP\RTSShipCPP.vcxproj", "{8648B548-71CC-47B5-8D80-D18B5A4168D2}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FluidSimulation", "FluidSimulation\FluidSimulation.vcxproj", "{63F5F2C7-1230-405B-AFC4-94DE4956FD64}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -61,6 +63,14 @@ Global
 		{8648B548-71CC-47B5-8D80-D18B5A4168D2}.Release|x64.Build.0 = Release|x64
 		{8648B548-71CC-47B5-8D80-D18B5A4168D2}.Release|x86.ActiveCfg = Release|Win32
 		{8648B548-71CC-47B5-8D80-D18B5A4168D2}.Release|x86.Build.0 = Release|Win32
+		{63F5F2C7-1230-405B-AFC4-94DE4956FD64}.Debug|x64.ActiveCfg = Debug|x64
+		{63F5F2C7-1230-405B-AFC4-94DE4956FD64}.Debug|x64.Build.0 = Debug|x64
+		{63F5F2C7-1230-405B-AFC4-94DE4956FD64}.Debug|x86.ActiveCfg = Debug|Win32
+		{63F5F2C7-1230-405B-AFC4-94DE4956FD64}.Debug|x86.Build.0 = Debug|Win32
+		{63F5F2C7-1230-405B-AFC4-94DE4956FD64}.Release|x64.ActiveCfg = Release|x64
+		{63F5F2C7-1230-405B-AFC4-94DE4956FD64}.Release|x64.Build.0 = Release|x64
+		{63F5F2C7-1230-405B-AFC4-94DE4956FD64}.Release|x86.ActiveCfg = Release|Win32
+		{63F5F2C7-1230-405B-AFC4-94DE4956FD64}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

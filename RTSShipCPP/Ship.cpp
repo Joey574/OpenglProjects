@@ -7,7 +7,7 @@ void Ship::update(Ship* enemy_ships, float deltaTime) {
 void Ship::update_position(float deltaTime) {
 	vec2 delta = { 0.0f, 0.0f };
 
-	if (vec2::distance(m_target, m_pos) > 0.01f) {
+	if (vec2::distance(m_target, m_pos) > 0.0f) {
 		m_dir = m_target - m_pos - m_vel;
 		delta = vec2::normalized(m_dir) * m_acc;
 

@@ -2,6 +2,7 @@
 #include <chrono>
 #include <string>
 #include <random>
+#include <Windows.h>
 
 #include "../OpenglProjects/OpenglProjects.h"
 #include "GLFW/glfw3.h"
@@ -60,6 +61,9 @@ int main()
 	Ship* player_ships = (Ship*)malloc(s_count * sizeof(Ship));
 	Ship* enemy_ships = (Ship*)malloc(s_count * sizeof(Ship));
 
+	projectile* player_projectiles;
+	projectile* enemy_projectiles;
+
 	if (player_ships == NULL || enemy_ships == NULL) {
 		return 1;
 	}
@@ -101,6 +105,9 @@ int main()
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();
+
+		// artificial lag
+		//Sleep(100);
 
 
 		auto frame_time = std::chrono::high_resolution_clock::now() - frame_start;

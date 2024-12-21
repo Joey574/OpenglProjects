@@ -3,6 +3,7 @@
 
 #include "vec2.h"
 #include "weapon.h"
+#include "projectile.h"
 
 class Ship {
 public:
