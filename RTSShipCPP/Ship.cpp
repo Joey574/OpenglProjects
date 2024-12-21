@@ -1,17 +1,17 @@
 #include "Ship.h"
 
-void Ship::update(Ship* enemy_ships, float deltaTime) {
+void Ship::update(const std::vector<Ship>& enemy_ships, float deltaTime) {
 	update_position(deltaTime);
 }
 
 void Ship::update_position(float deltaTime) {
 	vec2 delta = { 0.0f, 0.0f };
-
-	if (vec2::distance(m_target, m_pos) > 0.0f) {
-		m_dir = m_target - m_pos - m_vel;
+	
+	if (vec2::distance(m_tar, m_pos) > 0.0f) {
+		m_dir = m_tar - m_pos;
 		delta = vec2::normalized(m_dir) * m_acc;
 
-		delta = tts(deltaTime) >= tta(deltaTime) ? -delta : delta;
+		delta = tts() >= tta() ? (-delta) : (delta);
 
 	} else if (m_vel.x != 0.0f || m_vel.y != 0.0f) {
 		delta = -vec2::normalized(m_vel) * m_acc;
@@ -28,12 +28,12 @@ void Ship::fire_actions(float deltaTime) {
 
 }
 
-float Ship::tts(float deltaTime) const {
-	return vec2::magnitude(m_vel) / (m_acc * deltaTime);
+float Ship::tts() const {
+	return (vec2::magnitude(m_vel)) / (m_acc);
 }
-float Ship::tta(float deltaTime) const {
-	float time = vec2::distance(m_pos, m_target) / vec2::magnitude(m_vel);
-	float theta = vec2::angle(m_vel, m_target - m_pos);
-	time += theta > 1.5707963267948966f ? tts(deltaTime) : 0.0f;
+float Ship::tta() const {
+	float time = vec2::distance(m_pos, m_tar) / (vec2::magnitude(m_vel));
+	float theta = vec2::angle(m_vel, m_tar - m_pos);
+	time += theta > 1.5707963267948966f ? tts() : 0.0f;
 	return time;
 }

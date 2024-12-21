@@ -144,6 +144,7 @@
     <ClCompile Include="Ship.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="gameData.h" />
     <ClInclude Include="projectile.h" />
     <ClInclude Include="Ship.h" />
     <ClInclude Include="vec2.h" />

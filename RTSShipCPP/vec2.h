@@ -1,21 +1,20 @@
 #pragma once
-#include <iostream>
 
 struct vec2 {
 	float x;
 	float y;
 
 	static inline float magnitude(const vec2& vec) {
-		return std::sqrtf(vec.x * vec.x + vec.y * vec.y);
+		return std::sqrt(vec.x * vec.x + vec.y * vec.y);
 	}
 	static inline float angle(const vec2& a, const vec2& b) {
-		return std::acosf(dotprod(normalized(a), normalized(b)));
+		return std::acos(dotprod(normalized(a), normalized(b)));
 	}
 	static inline float dotprod(const vec2& a, const vec2& b) {
 		return a.x * b.x + a.y * b.y;
 	}
 	static inline float distance(const vec2& a, const vec2& b) {
-		return std::sqrtf(std::powf(b.x - a.x, 2) + std::powf(b.y - a.y, 2));
+		return std::sqrt(std::pow(b.x - a.x, 2) + std::pow(b.y - a.y, 2));
 	}
 
 	static inline vec2 normalized(const vec2& vec) {

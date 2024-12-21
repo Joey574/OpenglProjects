@@ -9,18 +9,18 @@
 
 #include "Ship.h"
 
-void render_ships(Ship* ships, size_t count) {
-	for (size_t i = 0; i < count; i++) {
-		draw_circle(ships[i].m_pos.x, ships[i].m_pos.y, 0.005f);
+void render_ships(const std::vector<Ship>& ships, size_t xMod, size_t yMod) {
+	for (size_t i = 0; i < ships.size(); i++) {
+		draw_circle(ships[i].m_pos.x / xMod, ships[i].m_pos.y / yMod, 0.005f);
 	}
 }
-void update_ships(Ship* pShips, Ship* eShips, size_t pCount, float deltaTime) {
-	for (size_t i = 0; i < pCount; i++) {
+void update_ships(std::vector<Ship>& pShips, const std::vector<Ship>& eShips, float deltaTime) {
+	for (size_t i = 0; i < pShips.size(); i++) {
 		pShips[i].update(eShips, deltaTime);
 	}
 }
 
-void set_ship_pos(Ship* pShips, Ship* eShips, size_t pCount, size_t eCount) {
+void set_ship_pos(std::vector<Ship>& pShips, std::vector<Ship>& eShips, size_t xMod, size_t yMod) {
 
 	std::random_device rd;
 
@@ -32,8 +32,8 @@ void set_ship_pos(Ship* pShips, Ship* eShips, size_t pCount, size_t eCount) {
 	std::uniform_real_distribution<float> xGen(minX, maxX);
 	std::uniform_real_distribution<float> yGen(minY, maxY);
 
-	for (size_t i = 0; i < pCount; i++) {
-		pShips[i].m_pos = { xGen(rd), yGen(rd) };
+	for (size_t i = 0; i < pShips.size(); i++) {
+		pShips[i].m_pos = { xGen(rd) * xMod, yGen(rd) * yMod };
 	}
 
 	minX = 0.5f;
@@ -44,41 +44,39 @@ void set_ship_pos(Ship* pShips, Ship* eShips, size_t pCount, size_t eCount) {
 	xGen = std::uniform_real_distribution<float>(minX, maxX);
 	yGen = std::uniform_real_distribution<float>(minY, maxY);
 
-	for (size_t i = 0; i < eCount; i++) {
-		eShips[i].m_pos = { xGen(rd), yGen(rd) };
+	for (size_t i = 0; i < eShips.size(); i++) {
+		eShips[i].m_pos = { xGen(rd) * xMod, yGen(rd) * yMod };
 	}
 }
 
 int main()
 {
-	size_t width = 500;
-	size_t height = 500;
+	const size_t width = 500;
+	const size_t height = 500;
 
-	const size_t s_count = 1000;
+	const size_t s_count = 1;
 
-	weapon a = weapon(0.2f);
+	weapon a = weapon(0.2f, 0.1f);
 
-	Ship* player_ships = (Ship*)malloc(s_count * sizeof(Ship));
-	Ship* enemy_ships = (Ship*)malloc(s_count * sizeof(Ship));
+	std::vector<Ship> player_ships;
+	std::vector<Ship> enemy_ships;
 
-	projectile* player_projectiles;
-	projectile* enemy_projectiles;
+	std::vector<projectile> player_projectiles;
+	std::vector<projectile> enemy_projectiles;
 
-	if (player_ships == NULL || enemy_ships == NULL) {
-		return 1;
+	gameData gd;
+
+	for (int i = 0; i < s_count; i++) {
+		player_ships.push_back(gd.createShip(0, true));
+		player_ships[i].m_acc = 0.25f * 500;
 	}
 
 	for (int i = 0; i < s_count; i++) {
-		player_ships[i] = Ship(&a, 1);
-		player_ships[i].m_acc = 0.25f;
+		enemy_ships.push_back(gd.createShip(0, true));
+		enemy_ships[i].m_acc = 0.25f * 500;
 	}
 
-	for (int i = 0; i < s_count; i++) {
-		enemy_ships[i] = Ship(&a, 1);
-		enemy_ships[i].m_acc = 0.25f;
-	}
-
-	set_ship_pos(player_ships, enemy_ships, s_count, s_count);
+	set_ship_pos(player_ships, enemy_ships, width, height);
 
 
 	GLFWwindow* window = create_window(width, height, "Ship RTS Cpp");
@@ -97,18 +95,17 @@ int main()
 
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		update_ships(player_ships, enemy_ships, s_count, deltaTime);
-		update_ships(enemy_ships, player_ships, s_count, deltaTime);
+		update_ships(player_ships, enemy_ships, deltaTime);
+		update_ships(enemy_ships, player_ships, deltaTime);
 
-		render_ships(player_ships, s_count);
-		render_ships(enemy_ships, s_count);
+		render_ships(player_ships, width, height);
+		render_ships(enemy_ships, width, height);
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 
 		// artificial lag
 		//Sleep(100);
-
 
 		auto frame_time = std::chrono::high_resolution_clock::now() - frame_start;
 		frame_sum += frame_time.count() / 1000000.00;
@@ -120,9 +117,5 @@ int main()
 		std::cout << out;
 	}
 
-	free(player_ships);
-	free(enemy_ships);
-
 	glfwTerminate();
 }
-
